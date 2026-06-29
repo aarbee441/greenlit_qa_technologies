@@ -1641,6 +1641,10 @@ p { color: var(--slate); line-height: 1.7; }
       <div>
         <div class="contact-form" id="contact-form-wrap">
           <form id="contact-form" novalidate>
+  <input type="hidden" name="access_key" value="451d07c7-8391-4f66-9a93-de26acd373ff"/>
+  <input type="hidden" name="subject" value="New Enquiry — GreenLit QA Technologies"/>
+  <input type="hidden" name="from_name" value="GreenLit QA Website"/>
+  <input type="checkbox" name="botcheck" style="display:none;"/>
             <div class="form-row">
               <div class="form-group">
                 <label for="fname">Your name</label>
@@ -1924,12 +1928,46 @@ const passInterval = setInterval(() => {
 })();
 
 // ── CONTACT FORM ──────────────────────────────
-document.getElementById('contact-form').addEventListener('submit', function(e) {
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
   e.preventDefault();
+
   const form = document.getElementById('contact-form');
   const success = document.getElementById('form-success');
-  form.style.display = 'none';
-  success.style.display = 'block';
+  const btn = form.querySelector('.form-submit');
+
+  // Show loading state
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  const formData = new FormData(form);
+  const object = Object.fromEntries(formData);
+  const json = JSON.stringify(object);
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: json
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      // Show success state
+      form.style.display = 'none';
+      success.style.display = 'block';
+    } else {
+      throw new Error(result.message);
+    }
+
+  } catch (error) {
+    btn.textContent = 'Send Message — We\'ll Reply in 24 Hours';
+    btn.disabled = false;
+    alert('Something went wrong. Please email us directly at [your@email.com]');
+  }
 });
 
 // ── SMOOTH SCROLL ─────────────────────────────
