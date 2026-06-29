@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GreenLit QA Technologies — Ship with Confidence. Every Time.</title>
+<meta name="description" content="GreenLit QA Technologies builds and runs test automation for software teams in India, US, and Europe. Playwright, AI self-healing locators, live dashboards. Ship every release with confidence."/>
+<meta property="og:title" content="GreenLit QA Technologies — Ship with Confidence. Every Time."/>
+<meta property="og:description" content="We build and run test automation for software teams — so every release is verified, not hoped for."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://greenlit-qa.com"/>
+<meta property="og:image" content="https://greenlit-qa.com/og-image.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='28,2 52,2 64,22 52,42 28,42 16,22' fill='%230E1B2A'/%3E%3Cpolygon points='28,7 52,7 62,22 52,37 28,37 18,22' fill='%230FB57A'/%3E%3Cpolyline points='22,22 29,30 44,14' fill='none' stroke='%23FFFFFF' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"/>
+
+<style>
+/* ═══════════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════════ */
+:root {
+  --green:      #0FB57A;
+  --green-dark: #0a8d5e;
+  --green-glow: rgba(15,181,122,0.12);
+  --navy:       #0E1B2A;
+  --navy-light: #1d3047;
+  --slate:      #46586e;
+  --line:       #dfe5ec;
+  --paper:      #ffffff;
+  --tint:       #f5f8f7;
+  --font:       'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --mono:       'JetBrains Mono', 'Fira Code', monospace;
+  --r-card:     12px;
+  --r-btn:      8px;
+  --r-pill:     24px;
+  --shadow:     0 4px 24px rgba(14,27,42,0.10);
+  --shadow-lg:  0 12px 48px rgba(14,27,42,0.18);
+}
+
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font);
+  color: var(--navy);
+  background: var(--paper);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ═══════════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════════ */
+h1, h2, h3, h4 {
+  font-family: var(--font);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+h1 { font-size: clamp(2.2rem, 5vw, 3.75rem); }
+h2 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); }
+h3 { font-size: 1.25rem; font-weight: 700; }
+p { color: var(--slate); line-height: 1.7; }
+
+/* ═══════════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: var(--r-btn);
+  font-family: var(--font);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+.btn-primary:hover {
+  background: var(--green-dark);
+  border-color: var(--green-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(15,181,122,0.35);
+}
+.btn-outline {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255,255,255,0.35);
+}
+.btn-outline:hover {
+  border-color: #fff;
+  background: rgba(255,255,255,0.08);
+}
+.btn-dark {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+.btn-dark:hover {
+  background: var(--navy-light);
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════
+   LAYOUT UTILITIES
+═══════════════════════════════════════════════ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.section { padding: 96px 0; }
+.section-sm { padding: 56px 0; }
+
+/* ═══════════════════════════════════════════════
+   SCROLL ANIMATIONS
+═══════════════════════════════════════════════ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-in-delay-1 { transition-delay: 0.1s; }
+.fade-in-delay-2 { transition-delay: 0.2s; }
+.fade-in-delay-3 { transition-delay: 0.3s; }
+.fade-in-delay-4 { transition-delay: 0.4s; }
+
+/* ═══════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════ */
+#nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: var(--navy);
+  border-bottom: 1px solid var(--navy-light);
+  transition: box-shadow 0.3s;
+}
+#nav.scrolled {
+  box-shadow: 0 2px 20px rgba(0,0,0,0.35);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.nav-logo-text {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.nav-logo-text span { color: var(--green); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.nav-links a {
+  color: rgba(255,255,255,0.72);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: #fff; }
+.nav-cta { margin-left: 8px; padding: 10px 20px; font-size: 0.875rem; }
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  border: none;
+  background: none;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 0;
+  background: var(--navy-light);
+  padding: 16px 24px 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.mobile-menu a {
+  color: rgba(255,255,255,0.8);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu.open { display: flex; }
+
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  .nav-links { display: none; }
+  .nav-cta-desktop { display: none; }
+}
+
+/* ═══════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  padding: 100px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+#hero::before {
+  content: '';
+  position: absolute;
+  top: -180px; right: -180px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(15,181,122,0.08) 0%, transparent 65%);
+  pointer-events: none;
+}
+#hero::after {
+  content: '';
+  position: absolute;
+  bottom: -200px; left: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(15,181,122,0.05) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.hero-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--green-glow);
+  color: var(--green);
+  border: 1px solid rgba(15,181,122,0.25);
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 24px;
+  font-family: var(--mono);
+}
+.hero-label::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.hero-headline {
+  color: #fff;
+  margin-bottom: 24px;
+}
+.hero-headline .highlight { color: var(--green); display: block; }
+.hero-sub {
+  font-size: 1.125rem;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 40px;
+  max-width: 480px;
+  line-height: 1.7;
+}
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Terminal */
+.terminal {
+  background: #0a1520;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(15,181,122,0.1);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+}
+.terminal-bar {
+  background: #162030;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+.terminal-dots span {
+  width: 11px; height: 11px;
+  border-radius: 50%;
+}
+.dot-r { background: #ff5f57; }
+.dot-y { background: #ffbd2e; }
+.dot-g { background: #28ca41; }
+.terminal-title {
+  color: rgba(255,255,255,0.45);
+  font-size: 0.78rem;
+  flex: 1;
+  text-align: center;
+}
+.terminal-body {
+  padding: 20px;
+  min-height: 280px;
+}
+.terminal-line {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 3px 0;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.terminal-line.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+.t-check { color: var(--green); font-size: 0.875rem; }
+.t-fail { color: #ff5f57; font-size: 0.875rem; }
+.t-info { color: rgba(255,255,255,0.35); }
+.t-run { color: #7dd3fc; }
+.t-test { color: rgba(255,255,255,0.85); }
+.t-time { color: rgba(255,255,255,0.35); font-size: 0.75rem; margin-left: auto; }
+.t-suite { color: #c4b5fd; font-weight: 500; }
+.t-summary { color: var(--green); font-weight: 500; margin-top: 4px; }
+
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  .terminal { margin: 0 auto; max-width: 520px; }
+}
+@media (max-width: 540px) {
+  .hero-ctas { flex-direction: column; }
+  .hero-ctas .btn { justify-content: center; }
+}
+
+/* ═══════════════════════════════════════════════
+   SOCIAL PROOF BAR
+═══════════════════════════════════════════════ */
+#proof-bar {
+  background: var(--tint);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 20px 0;
+}
+.proof-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  color: var(--slate);
+  font-weight: 500;
+}
+.proof-inner .flag-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.proof-inner .sep { color: var(--line); font-size: 1.2rem; }
+
+/* ═══════════════════════════════════════════════
+   PROBLEM SECTION
+═══════════════════════════════════════════════ */
+#problem {
+  background: var(--navy);
+  padding: 96px 0;
+}
+#problem h2 { color: #fff; text-align: center; margin-bottom: 16px; }
+#problem .section-sub {
+  text-align: center;
+  color: rgba(255,255,255,0.55);
+  font-size: 1.0625rem;
+  margin-bottom: 56px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 56px;
+}
+.pain-card {
+  background: var(--navy-light);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--r-card);
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.pain-card:hover {
+  border-color: rgba(255,81,81,0.3);
+  transform: translateY(-3px);
+}
+.pain-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: #ff5f57;
+  border-radius: 3px 3px 0 0;
+}
+.pain-icon {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+.pain-card h3 { color: #fff; margin-bottom: 10px; font-size: 1.1rem; }
+.pain-card p { color: rgba(255,255,255,0.52); font-size: 0.9rem; line-height: 1.7; }
+.problem-cta {
+  text-align: center;
+}
+.problem-cta p {
+  color: rgba(255,255,255,0.65);
+  font-size: 1.0625rem;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) { .pain-grid { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════════════
+   SERVICES
+═══════════════════════════════════════════════ */
+#services { background: var(--paper); }
+.section-eyebrow {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--green);
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-header h2 { margin-bottom: 12px; color: var(--navy); }
+.section-header p { color: var(--slate); font-size: 1.0625rem; max-width: 520px; margin: 0 auto; }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.service-card {
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-card);
+  padding: 36px 32px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease;
+  background: var(--paper);
+}
+.service-card:hover {
+  border-color: var(--green);
+  box-shadow: 0 8px 32px rgba(15,181,122,0.12);
+  transform: translateY(-3px);
+}
+.service-card.featured {
+  border-color: var(--green);
+  background: var(--tint);
+}
+.service-badge {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: var(--green);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+}
+.service-icon {
+  width: 44px; height: 44px;
+  background: var(--green-glow);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.service-card h3 { color: var(--navy); margin-bottom: 8px; }
+.service-card p { color: var(--slate); font-size: 0.9375rem; margin-bottom: 20px; }
+.service-price {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  color: var(--green);
+  font-weight: 500;
+  margin-bottom: 16px;
+  padding: 6px 12px;
+  background: var(--green-glow);
+  border-radius: 6px;
+  display: inline-block;
+}
+.service-link {
+  color: var(--green);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.2s;
+}
+.service-link:hover { gap: 10px; }
+
+@media (max-width: 640px) { .services-grid { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════════════
+   WOW FEATURES
+═══════════════════════════════════════════════ */
+#features { background: var(--navy); padding: 96px 0; }
+#features h2 { color: #fff; text-align: center; margin-bottom: 16px; }
+#features .section-sub {
+  text-align: center;
+  color: rgba(255,255,255,0.55);
+  font-size: 1.0625rem;
+  margin-bottom: 80px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feature-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-bottom: 96px;
+}
+.feature-block:last-child { margin-bottom: 0; }
+.feature-block.reverse { direction: rtl; }
+.feature-block.reverse > * { direction: ltr; }
+
+.feature-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--green);
+  background: var(--green-glow);
+  border: 1px solid rgba(15,181,122,0.2);
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  margin-bottom: 16px;
+  letter-spacing: 0.04em;
+}
+.feature-block h3 { color: #fff; font-size: 1.5rem; margin-bottom: 16px; }
+.feature-block p { color: rgba(255,255,255,0.60); font-size: 1rem; line-height: 1.75; }
+
+/* Visual: Self-healing diagram */
+.healing-diagram {
+  background: var(--navy-light);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 28px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+.healing-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: all 0.5s ease;
+}
+.healing-step.broken {
+  background: rgba(255,95,87,0.12);
+  border: 1px solid rgba(255,95,87,0.2);
+  color: #ff5f57;
+}
+.healing-step.ai {
+  background: rgba(196,181,253,0.12);
+  border: 1px solid rgba(196,181,253,0.2);
+  color: #c4b5fd;
+}
+.healing-step.fixed {
+  background: rgba(15,181,122,0.12);
+  border: 1px solid rgba(15,181,122,0.2);
+  color: var(--green);
+}
+.healing-arrow {
+  text-align: center;
+  color: rgba(255,255,255,0.2);
+  padding: 2px 0;
+  font-size: 1rem;
+}
+
+/* Visual: Dashboard mock */
+.dashboard-mock {
+  background: var(--navy-light);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.dash-bar {
+  background: #162030;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.dash-bar-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse 2s ease-in-out infinite;
+}
+.dash-bar-title { font-family: var(--mono); font-size: 0.72rem; color: rgba(255,255,255,0.4); }
+.dash-body { padding: 16px; }
+.dash-stats { display: flex; gap: 12px; margin-bottom: 12px; }
+.dash-stat {
+  flex: 1;
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
+  text-align: center;
+}
+.dash-stat .num { font-family: var(--mono); font-size: 1.4rem; font-weight: 700; color: var(--green); }
+.dash-stat .lbl { font-size: 0.65rem; color: rgba(255,255,255,0.35); margin-top: 2px; }
+.dash-tests { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+.dash-test {
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+}
+.dash-test.pass { background: rgba(15,181,122,0.2); color: var(--green); }
+.dash-test.fail { background: rgba(255,95,87,0.2); color: #ff5f57; }
+.dash-test.skip { background: rgba(255,189,46,0.15); color: #ffbd2e; }
+
+/* Visual: Before/After Slider */
+.slider-container {
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  user-select: none;
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: col-resize;
+}
+.slider-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  position: absolute;
+  top: 12px;
+  z-index: 3;
+  font-weight: 600;
+}
+.label-before { left: 12px; background: rgba(255,95,87,0.9); color: #fff; }
+.label-after { right: 12px; background: rgba(15,181,122,0.9); color: #fff; }
+.slider-before, .slider-after {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+.slider-after { clip-path: inset(0 50% 0 0); }
+.slider-handle {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: #fff;
+  z-index: 4;
+  cursor: col-resize;
+}
+.slider-handle::before {
+  content: '◀▶';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  color: var(--navy);
+  font-size: 0.65rem;
+  border-radius: 50%;
+  width: 32px; height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+  .feature-block { grid-template-columns: 1fr; gap: 40px; }
+  .feature-block.reverse { direction: ltr; }
+}
+
+/* ═══════════════════════════════════════════════
+   HOW IT WORKS
+═══════════════════════════════════════════════ */
+#process { background: var(--paper); }
+.steps-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+  margin-top: 56px;
+}
+.steps-row::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: calc(12.5% + 20px);
+  right: calc(12.5% + 20px);
+  height: 2px;
+  background: var(--line);
+}
+.step-item {
+  text-align: center;
+  padding: 0 16px;
+  position: relative;
+}
+.step-num {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  position: relative;
+  z-index: 1;
+  border: 3px solid var(--paper);
+  transition: background 0.3s;
+}
+.step-item:hover .step-num { background: var(--green); }
+.step-day {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--green);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.step-item h3 { margin-bottom: 8px; font-size: 1.05rem; }
+.step-item p { font-size: 0.875rem; color: var(--slate); line-height: 1.65; }
+
+@media (max-width: 768px) {
+  .steps-row { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .steps-row::before { display: none; }
+}
+@media (max-width: 480px) { .steps-row { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════════════
+   TECH STACK
+═══════════════════════════════════════════════ */
+#stack {
+  background: var(--tint);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+#stack .section-header { margin-bottom: 36px; }
+.stack-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.stack-pill {
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 7px 18px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--navy);
+  transition: all 0.2s;
+  font-family: var(--mono);
+}
+.stack-pill:hover {
+  border-color: var(--green);
+  color: var(--green);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════
+   ABOUT / WHY US
+═══════════════════════════════════════════════ */
+#about { background: var(--paper); }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 80px;
+  align-items: center;
+}
+.founder-card {
+  text-align: center;
+}
+.founder-avatar {
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: var(--tint);
+  border: 4px solid var(--green);
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 0 0 8px rgba(15,181,122,0.1);
+}
+.founder-avatar svg { opacity: 0.4; }
+.founder-name { font-size: 1.2rem; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+.founder-title { color: var(--slate); font-size: 0.9rem; margin-bottom: 16px; }
+.founder-exp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-glow);
+  color: var(--green);
+  border: 1px solid rgba(15,181,122,0.2);
+  padding: 5px 14px;
+  border-radius: var(--r-pill);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.trust-points { list-style: none; }
+.trust-point {
+  display: flex;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+.trust-point:last-child { border-bottom: none; }
+.trust-check {
+  width: 26px; height: 26px;
+  background: var(--green-glow);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.trust-check svg { width: 13px; height: 13px; }
+.trust-point h4 { font-size: 1rem; color: var(--navy); margin-bottom: 4px; }
+.trust-point p { font-size: 0.875rem; color: var(--slate); }
+
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .founder-card { max-width: 320px; margin: 0 auto; }
+}
+
+/* ═══════════════════════════════════════════════
+   CASE STUDY
+═══════════════════════════════════════════════ */
+#case-study { background: var(--navy); padding: 96px 0; }
+#case-study h2 { color: #fff; text-align: center; margin-bottom: 56px; }
+.case-card {
+  max-width: 820px;
+  margin: 0 auto;
+  background: var(--navy-light);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+.case-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--green);
+}
+.case-tag {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--green);
+  font-weight: 500;
+  margin-bottom: 20px;
+  letter-spacing: 0.06em;
+}
+.case-card h3 { color: #fff; font-size: 1.4rem; margin-bottom: 32px; line-height: 1.3; }
+.case-stats { display: flex; gap: 40px; flex-wrap: wrap; margin-bottom: 32px; }
+.case-stat { }
+.case-stat .num {
+  font-family: var(--mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--green);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.case-stat .desc { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+.case-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  flex-wrap: wrap;
+}
+.case-meta-pill {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.55);
+  font-size: 0.8rem;
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+}
+.case-link {
+  color: var(--green);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.2s;
+}
+.case-link:hover { gap: 10px; }
+
+@media (max-width: 640px) {
+  .case-card { padding: 32px 24px; }
+  .case-stats { gap: 24px; }
+}
+
+/* ═══════════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════════ */
+#contact {
+  background: var(--green);
+  padding: 96px 0;
+}
+#contact h2 { color: #fff; text-align: center; margin-bottom: 12px; }
+.contact-sub {
+  text-align: center;
+  color: rgba(255,255,255,0.8);
+  font-size: 1.0625rem;
+  margin-bottom: 56px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.contact-form {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 16px;
+  padding: 36px;
+  backdrop-filter: blur(10px);
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  color: rgba(255,255,255,0.9);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-family: var(--font);
+  font-size: 0.9375rem;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: rgba(255,255,255,0.45); }
+.form-group input:focus,
+.form-group textarea:focus { border-color: rgba(255,255,255,0.8); }
+.form-group textarea { resize: vertical; min-height: 100px; }
+.form-submit {
+  width: 100%;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 4px;
+}
+.form-submit:hover {
+  background: var(--navy-light);
+  transform: translateY(-1px);
+}
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 40px 20px;
+}
+.form-success .check-icon {
+  width: 56px; height: 56px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 1.5rem;
+}
+.form-success h4 { color: #fff; font-size: 1.2rem; margin-bottom: 8px; }
+.form-success p { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
+
+.contact-info { }
+.contact-info h3 { color: #fff; font-size: 1.2rem; margin-bottom: 24px; }
+.contact-detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.contact-detail .icon {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+  font-size: 1rem;
+}
+.contact-detail .text a,
+.contact-detail .text span { color: rgba(255,255,255,0.9); font-size: 0.9375rem; }
+.contact-detail .label { color: rgba(255,255,255,0.6); font-size: 0.8rem; margin-bottom: 2px; }
+
+.calendly-note {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 24px;
+}
+.calendly-note p { color: rgba(255,255,255,0.8); font-size: 0.875rem; margin-bottom: 8px; }
+.calendly-note code { font-family: var(--mono); font-size: 0.8rem; background: rgba(0,0,0,0.2); padding: 2px 6px; border-radius: 4px; color: #fff; }
+
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
+#footer { background: var(--navy); padding: 64px 0 32px; }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+.footer-logo-text { font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+.footer-logo-text span { color: var(--green); }
+.footer-tagline { color: rgba(255,255,255,0.4); font-size: 0.875rem; margin-bottom: 24px; font-style: italic; }
+.footer-socials { display: flex; gap: 12px; }
+.social-btn {
+  width: 36px; height: 36px;
+  background: var(--navy-light);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.6);
+  transition: all 0.2s;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.social-btn:hover { background: var(--green); color: #fff; border-color: var(--green); }
+.social-btn svg { width: 16px; height: 16px; }
+
+.footer-heading { color: rgba(255,255,255,0.5); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; margin-bottom: 16px; text-transform: uppercase; }
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links a { color: rgba(255,255,255,0.6); font-size: 0.9rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--green); }
+
+.footer-markets { color: rgba(255,255,255,0.6); font-size: 0.875rem; line-height: 1.7; margin-bottom: 12px; }
+.footer-gst { font-family: var(--mono); font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+
+.footer-bar {
+  border-top: 1px solid var(--navy-light);
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-copy { color: rgba(255,255,255,0.35); font-size: 0.8rem; }
+.footer-legal { display: flex; gap: 20px; }
+.footer-legal a { color: rgba(255,255,255,0.35); font-size: 0.8rem; transition: color 0.2s; }
+.footer-legal a:hover { color: rgba(255,255,255,0.7); }
+
+@media (max-width: 768px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bar { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <!-- Inline SVG logo mark -->
+        <svg width="36" height="36" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="28,2 52,2 64,22 52,42 28,42 16,22" fill="#ffffff"/>
+          <polygon points="28,7 52,7 62,22 52,37 28,37 18,22" fill="#0FB57A"/>
+          <polyline points="22,22 29,30 44,14" fill="none" stroke="#0E1B2A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="nav-logo-text">GreenLit <span>QA</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#process">How It Works</a>
+        <a href="#about">Why Us</a>
+        <a href="#contact">Contact</a>
+        <a href="#contact" class="btn btn-primary nav-cta nav-cta-desktop">Book a Free Call</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#services" class="mobile-nav-link">Services</a>
+      <a href="#process" class="mobile-nav-link">How It Works</a>
+      <a href="#about" class="mobile-nav-link">Why Us</a>
+      <a href="#contact" class="mobile-nav-link">Contact</a>
+      <a href="#contact" class="mobile-nav-link" style="color:var(--green);font-weight:700;">Book a Free Call →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-label">🟢 QA Automation · India · US · Europe</div>
+        <h1 class="hero-headline">
+          Ship with confidence.
+          <span class="highlight">Every time.</span>
+        </h1>
+        <p class="hero-sub">We build and run test automation for software teams — so every release is verified, not hoped for.</p>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn btn-primary">Book a Free 30-Min Call</a>
+          <a href="#process" class="btn btn-outline">See How It Works</a>
+        </div>
+      </div>
+      <div>
+        <div class="terminal" id="terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dots">
+              <span class="dot-r"></span>
+              <span class="dot-y"></span>
+              <span class="dot-g"></span>
+            </div>
+            <div class="terminal-title">GreenLit QA — Live Run</div>
+          </div>
+          <div class="terminal-body" id="terminal-body">
+            <!-- Lines injected by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SOCIAL PROOF BAR
+═══════════════════════════════════════════════ -->
+<!-- <div id="proof-bar">
+  <div class="container">
+    <div class="proof-inner">
+      <span>Trusted by product teams across</span>
+      <span class="flag-item">🇮🇳 India</span>
+      <span class="sep">·</span>
+      <span class="flag-item">🇺🇸 United States</span>
+      <span class="sep">·</span>
+      <span class="flag-item">🇬🇧 United Kingdom</span>
+      <span class="sep">·</span>
+      <span class="flag-item">🇩🇪 Germany</span>
+    </div>
+  </div>
+</div> -->
+
+<!-- ═══════════════════════════════════════════════
+     THE PROBLEM
+═══════════════════════════════════════════════ -->
+<section id="problem">
+  <div class="container">
+    <h2 class="fade-in">Sound familiar?</h2>
+    <p class="section-sub fade-in fade-in-delay-1">Every week, engineering teams ship features into the unknown. It doesn't have to be this way.</p>
+    <div class="pain-grid">
+      <div class="pain-card fade-in fade-in-delay-1">
+        <div class="pain-icon">🔴</div>
+        <h3>Tests you don't trust</h3>
+        <p>Your automation suite is red half the time. The team re-runs until it's green. Real bugs slip through — undetected.</p>
+      </div>
+      <div class="pain-card fade-in fade-in-delay-2">
+        <div class="pain-icon">🔴</div>
+        <h3>Release day chaos</h3>
+        <p>Every deployment is a gamble. Manual checks, crossed fingers, and post-release fire drills. Then the Slack alerts start.</p>
+      </div>
+      <div class="pain-card fade-in fade-in-delay-3">
+        <div class="pain-icon">🔴</div>
+        <h3>QA holding you back</h3>
+        <p>Regression takes days. Releases slow down. The team spends more time testing than building the product.</p>
+      </div>
+    </div>
+    <div class="problem-cta fade-in">
+      <p>If any of these sound familiar, we should talk.</p>
+      <a href="#contact" class="btn btn-primary">Let's Fix This →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SERVICES
+═══════════════════════════════════════════════ -->
+<section id="services" class="section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <!-- <span class="section-eyebrow">// what we do</span> -->
+      <h2>How we help</h2>
+      <p>Four ways to work with us — from a quick audit to full QA ownership.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-in fade-in-delay-1">
+        <span class="service-badge">Start here</span>
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0FB57A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+        </div>
+        <h3>QA Audit</h3>
+        <p>3–5 day deep-dive into your current testing. Gap analysis + prioritised recommendations. No fluff, just clarity.</p>
+        <div class="service-price">From ₹45,000 / $800</div>
+        <a href="#contact" class="service-link">Get started <span>→</span></a>
+      </div>
+      <div class="service-card fade-in fade-in-delay-2">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0FB57A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <h3>Automation Framework Build</h3>
+        <p>End-to-end framework in 4–6 weeks. Playwright + TypeScript + Cucumber, CI integration, and reporting. You own the code.</p>
+        <div class="service-price">From ₹2,50,000 / $4,000</div>
+        <a href="#contact" class="service-link">Learn more <span>→</span></a>
+      </div>
+      <div class="service-card featured fade-in fade-in-delay-3">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0FB57A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <h3>Dedicated Automation Engineer</h3>
+        <p>A senior automation engineer embedded in your team, full-time, monthly. Attends standups, owns the test layer, ships with you.</p>
+        <div class="service-price">From ₹1,20,000 / $2,000/mo</div>
+        <a href="#contact" class="service-link">Learn more <span>→</span></a>
+      </div>
+      <div class="service-card fade-in fade-in-delay-4">
+        <div class="service-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0FB57A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h3>Managed QA Retainer</h3>
+        <p>We own quality end-to-end. Automation, visual testing, reporting — your complete QA function. You ship, we cover.</p>
+        <div class="service-price">From ₹2,00,000 / $3,500/mo</div>
+        <a href="#contact" class="service-link">Learn more <span>→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     WOW FEATURES
+═══════════════════════════════════════════════ -->
+<section id="features">
+  <div class="container">
+    <div class="fade-in">
+      <!-- <p class="section-eyebrow" style="color:var(--green);display:block;text-align:center;">// differentiators</p> -->
+      <h2 style="color:#fff;text-align:center;margin-bottom:12px;">What makes us different</h2>
+      <p class="section-sub">These aren't marketing bullets. They're capabilities built into every engagement.</p>
+    </div>
+
+    <!-- Feature 1: AI-Powered Automation -->
+    <div class="feature-block fade-in">
+      <div>
+        <span class="feature-tag">Next-gen automation</span>
+        <h3>AI Built Into Every Framework</h3>
+        <p>We don't just write automation scripts — we embed AI at the core. From self-healing locators that fix themselves when your UI changes, to AI-assisted test generation that analyses your app and suggests what to cover next.</p>
+        <p style="margin-top:16px;">Your test suite gets smarter over time, not more brittle.</p>
+      </div>
+      <div>
+        <div class="healing-diagram">
+          <div class="healing-step broken">
+            ✗ &nbsp;<span>UI changed — 12 locators broken</span>
+          </div>
+          <div class="healing-arrow">↓</div>
+          <div class="healing-step ai">
+            ⚡ &nbsp;<span>AI analysing DOM changes...</span>
+          </div>
+          <div class="healing-arrow">↓</div>
+          <div class="healing-step fixed">
+            ✓ &nbsp;<span>All 12 locators self-healed</span>
+          </div>
+          <div style="margin-top:12px;padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);">
+            <span style="color:rgba(255,255,255,0.3);font-size:0.75rem;font-family:var(--mono);">$ Tests continued. 0 failures. See heal.log</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 2: Beautiful Reports -->
+    <div class="feature-block reverse fade-in">
+      <div>
+        <span class="feature-tag">Reporting that gets read</span>
+        <h3>Reports Your Whole Team Actually Understands</h3>
+        <p>Most test reports are walls of text that only QA engineers read. Ours are visual, structured, and built for every stakeholder — engineers see the stack traces, managers see the pass rate, product sees which features are covered.</p>
+        <p style="margin-top:16px;">One report. Shared with everyone. No translation needed.</p>
+      </div>
+      <div>
+        <div class="dashboard-mock">
+          <div class="dash-bar">
+            <div class="dash-bar-dot"></div>
+            <span class="dash-bar-title">Release Report — v2.14.0 — 14 Jun 2026</span>
+          </div>
+          <div class="dash-body">
+            <div class="dash-stats">
+              <div class="dash-stat">
+                <div class="num" style="color:var(--green);">97%</div>
+                <div class="lbl">PASS RATE</div>
+              </div>
+              <div class="dash-stat">
+                <div class="num">27</div>
+                <div class="lbl">PASSED</div>
+              </div>
+              <div class="dash-stat">
+                <div class="num" style="color:#ff5f57;">1</div>
+                <div class="lbl">FAILED</div>
+              </div>
+              <div class="dash-stat">
+                <div class="num" style="color:#ffbd2e;">9.4s</div>
+                <div class="lbl">DURATION</div>
+              </div>
+            </div>
+            <div class="dash-tests" id="dash-tests">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 3: End-to-End Coverage -->
+    <div class="feature-block fade-in">
+      <div>
+        <span class="feature-tag">Full-spectrum testing</span>
+        <h3>UI, API, and Visual — All in One Suite</h3>
+        <p>Most teams test only what's easy. We build coverage across the full stack — UI flows in the browser, API contracts in the backend, and pixel-level visual regression to catch layout breaks before your users do.</p>
+        <p style="margin-top:16px;">One framework. Every layer covered. Nothing falls through the gaps.</p>
+      </div>
+      <div>
+        <div class="healing-diagram">
+          <div class="healing-step fixed" style="margin-bottom:8px;">
+            ✓ &nbsp;<span style="color:rgba(255,255,255,0.85);">UI Tests &nbsp;</span><span style="color:rgba(255,255,255,0.35);font-size:0.75rem;">23 flows · Playwright</span>
+          </div>
+          <div class="healing-step fixed" style="margin-bottom:8px;">
+            ✓ &nbsp;<span style="color:rgba(255,255,255,0.85);">API Tests &nbsp;</span><span style="color:rgba(255,255,255,0.35);font-size:0.75rem;">41 endpoints · REST Assured</span>
+          </div>
+          <div class="healing-step fixed" style="margin-bottom:12px;">
+            ✓ &nbsp;<span style="color:rgba(255,255,255,0.85);">Visual Tests &nbsp;</span><span style="color:rgba(255,255,255,0.35);font-size:0.75rem;">12 screens · pixel diff</span>
+          </div>
+          <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);">
+            <span style="color:rgba(255,255,255,0.3);font-size:0.75rem;font-family:var(--mono);">$ 76 tests · 0 failures · full coverage</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     HOW IT WORKS
+═══════════════════════════════════════════════ -->
+<section id="process" class="section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <!-- <span class="section-eyebrow">// the process</span> -->
+      <h2>From zero to confident releases</h2>
+      <p>Four steps that take you from "we have no idea what's breaking" to shipping without fear.</p>
+    </div>
+    <div class="steps-row">
+      <div class="step-item fade-in fade-in-delay-1">
+        <div class="step-num">1</div>
+        <div class="step-day">Day 0</div>
+        <h3>Free Call</h3>
+        <p>30 minutes. We understand your stack, your pain, and whether we're the right fit. No pitch, just honest conversation.</p>
+      </div>
+      <div class="step-item fade-in fade-in-delay-2">
+        <div class="step-num">2</div>
+        <div class="step-day">Week 1</div>
+        <h3>Audit</h3>
+        <p>We map your highest-risk flows and existing automation. You get a clear picture of what to fix first and why.</p>
+      </div>
+      <div class="step-item fade-in fade-in-delay-3">
+        <div class="step-num">3</div>
+        <div class="step-day">Weeks 2–6</div>
+        <h3>Build</h3>
+        <p>Framework built, tests written, CI integrated. First working tests in your pipeline by week one of the build phase.</p>
+      </div>
+      <div class="step-item fade-in fade-in-delay-4">
+        <div class="step-num">4</div>
+        <div class="step-day">Week 6+</div>
+        <h3>Ship Confidently</h3>
+        <p>Every release verified automatically. You ship. We watch. Nothing breaks without you knowing first.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     TECH STACK
+═══════════════════════════════════════════════ -->
+<section id="stack" class="section-sm">
+  <div class="container">
+    <div class="section-header fade-in">
+      <!-- <span class="section-eyebrow">// tool-agnostic</span> -->
+      <h2>We work in your stack</h2>
+      <p>We fit the tools your team already uses — not the other way around.</p>
+    </div>
+    <div class="stack-pills fade-in">
+      <span class="stack-pill">Playwright</span>
+      <span class="stack-pill">TypeScript</span>
+      <span class="stack-pill">Selenium</span>
+      <span class="stack-pill">Cypress</span>
+      <span class="stack-pill">Appium</span>
+      <span class="stack-pill">Cucumber</span>
+      <span class="stack-pill">REST Assured</span>
+      <span class="stack-pill">Postman</span>
+      <span class="stack-pill">JMeter</span>
+      <span class="stack-pill">k6</span>
+      <span class="stack-pill">GitHub Actions</span>
+      <span class="stack-pill">Jenkins</span>
+      <span class="stack-pill">GitLab CI</span>
+      <span class="stack-pill">Allure</span>
+      <span class="stack-pill">Python</span>
+      <span class="stack-pill">Java</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     ABOUT / WHY US
+═══════════════════════════════════════════════ -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <!-- <span class="section-eyebrow">// who we are</span> -->
+      <h2>A senior engineer, not a sales team</h2>
+    </div>
+    <div class="about-grid">
+      <div class="founder-card fade-in">
+        <!-- <div class="founder-avatar">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="32" r="18" fill="#46586e"/>
+            <ellipse cx="40" cy="72" rx="28" ry="20" fill="#46586e"/>
+          </svg>
+        </div> -->
+        <div class="founder-name">Overall 14+ years of Experience in the Automation Testing</div>
+        <div class="founder-title">Expertise in different Domains</div>
+        <div class="founder-exp">Solving problems that saves Time and Money</div>
+      </div>
+      <div class="fade-in fade-in-delay-1">
+        <ul class="trust-points">
+          <li class="trust-point">
+            <div class="trust-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0FB57A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <h4>Senior-led delivery</h4>
+              <p>You work with the expert, not a junior assigned after the deal closes. The person you spoke to is the person who builds it.</p>
+            </div>
+          </li>
+          <li class="trust-point">
+            <div class="trust-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0FB57A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <h4>You own everything</h4>
+              <p>All code, IP, and frameworks are contractually yours from day one. No vendor lock-in. No hostage code.</p>
+            </div>
+          </li>
+          <li class="trust-point">
+            <div class="trust-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0FB57A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <h4>Timezone advantage</h4>
+              <p>IST overlaps with European mornings and delivers overnight for US teams. You wake up to progress, not questions.</p>
+            </div>
+          </li>
+          <li class="trust-point">
+            <div class="trust-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0FB57A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <h4>Tool-agnostic</h4>
+              <p>We fit your stack, not the other way around. Playwright, Cypress, Selenium — whatever you already use.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CASE STUDY
+═══════════════════════════════════════════════ -->
+<section id="case-study">
+  <div class="container">
+    <h2 class="fade-in" style="color:#fff;text-align:center;margin-bottom:56px;">Results that speak</h2>
+    <div class="case-card fade-in">
+      <!-- <div class="case-tag">// CASE STUDY · FINTECH · UK</div> -->
+      <h3>Reduced regression time from 3 days to 90 minutes for a US based Fintech client</h3>
+      <div class="case-stats">
+        <div class="case-stat">
+          <div class="num">97%</div>
+          <div class="desc">Test pass rate</div>
+        </div>
+        <div class="case-stat">
+          <div class="num">23</div>
+          <div class="desc">Critical flows automated</div>
+        </div>
+        <div class="case-stat">
+          <div class="num">2×</div>
+          <div class="desc">Release frequency</div>
+        </div>
+        <div class="case-stat">
+          <div class="num">90 min</div>
+          <div class="desc">Down from 2 days</div>
+        </div>
+      </div>
+      <div class="case-meta">
+        <!-- <span class="case-meta-pill">Client name withheld</span> -->
+        <span class="case-meta-pill">Fintech</span>
+        <span class="case-meta-pill">United States</span>
+        <!-- <a href="#contact" class="case-link">Read the case study <span>→</span></a> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CONTACT / CTA
+═══════════════════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <h2 class="fade-in">Ready to ship with confidence?</h2>
+    <p class="contact-sub fade-in">Book a free 30-minute call. We'll look at your current setup and tell you honestly what we'd change.</p>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-form" id="contact-form-wrap">
+          <form id="contact-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">Your name</label>
+                <input type="text" id="fname" name="name" placeholder="Priya Sharma" required/>
+              </div>
+              <div class="form-group">
+                <label for="femail">Work email</label>
+                <input type="email" id="femail" name="email" placeholder="priya@startup.io" required/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="fcompany">Company</label>
+              <input type="text" id="fcompany" name="company" placeholder="Your startup or product"/>
+            </div>
+            <div class="form-group">
+              <label for="fmessage">What's your biggest QA pain right now?</label>
+              <textarea id="fmessage" name="message" placeholder="e.g. Our test suite is unreliable, we can't release more than once a week..."></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send Message — We'll Reply in 24 Hours</button>
+          </form>
+          <div class="form-success" id="form-success">
+            <div class="check-icon">✓</div>
+            <h4>Message received!</h4>
+            <p>We'll be in touch within 24 hours to book your free call.</p>
+          </div>
+        </div>
+
+        <!-- Calendly placeholder -->
+        <!-- <div class="calendly-note" style="margin-top:16px;">
+          <p>📅 <strong style="color:#fff;">Prefer to book directly?</strong> Replace the div below with your Calendly embed:</p>
+          <p><code>&lt;!-- Replace this with your Calendly inline widget --&gt;</code><br/>
+          <code>data-url="https://calendly.com/[YOUR-LINK]"</code></p>
+        </div> -->
+      </div>
+
+      <div class="contact-info">
+        <h3 style="color:#fff;">Or reach out directly</h3>
+        <div class="contact-detail">
+          <div class="icon">✉</div>
+          <div class="text">
+            <div class="label">Email</div>
+            <a href="mailto:[your@email.com]">contact@greenlitqatechnologies.com</a>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="icon">📞</div>
+          <div class="text">
+            <div class="label">Phone (WhatsApp)</div>
+            <a href="tel:+91XXXXXXXXXX"><span>+91 XXXXX XXXXX</span></a>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="icon">🔗</div>
+          <div class="text">
+            <div class="label">LinkedIn</div>
+            <a href="https://www.linkedin.com/company/greenlit-qa-technologies/about/" target="_blank"><span>greenlit-qa-technologies</span></a>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="icon">🌐</div>
+          <div class="text">
+            <div class="label">Website</div>
+            <span>greenlit-qa.com</span>
+          </div>
+        </div>
+
+        <div style="margin-top:32px; padding:20px; background:rgba(255,255,255,0.1); border-radius:10px; border:1px solid rgba(255,255,255,0.2);">
+          <p style="color:rgba(255,255,255,0.9);font-size:0.875rem;font-weight:600;margin-bottom:4px;">🌍 Serving teams in</p>
+          <p style="color:rgba(255,255,255,0.7);font-size:0.875rem;">🇮🇳 India &nbsp;·&nbsp; 🇺🇸 United States &nbsp;·&nbsp; 🇬🇧 United Kingdom &nbsp;·&nbsp; 🇩🇪 Germany</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════ -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-text">GreenLit <span>QA</span> Technologies</div>
+        <p class="footer-tagline">"Ship with confidence. Every time."</p>
+        <div class="footer-socials">
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/company/greenlit-qa-technologies/about/" class="social-btn" target="_blank" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <!-- X/Twitter
+          <a href="https://twitter.com/greenlitqa" class="social-btn" target="_blank" aria-label="X / Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a> -->
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-heading">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#features">Capabilities</a></li>
+          <li><a href="#process">How It Works</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-heading">We Serve</div>
+        <p class="footer-markets">🇮🇳 India (Primary market)<br/>🇺🇸 United States<br/>🇬🇧 United Kingdom<br/>🇩🇪 Germany &amp; Europe</p>
+        <p class="footer-gst">GST: [XXXXXXXXXXXXXXXXX]</p>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span class="footer-copy">© 2026 GreenLit QA Technologies. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════ -->
+<script>
+// ── NAV SCROLL SHADOW ─────────────────────────
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// ── HAMBURGER MENU ────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+// Close menu on link click
+document.querySelectorAll('.mobile-nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
+});
+
+// ── SCROLL ANIMATIONS ─────────────────────────
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+fadeEls.forEach(el => observer.observe(el));
+
+// ── TERMINAL ANIMATION ────────────────────────
+const terminalLines = [
+  { type: 'info', text: '$ npx playwright test --project=chromium' },
+  { type: 'run', text: '▶  Running 28 tests in 4 workers...' },
+  { type: 'suite', text: '  Suite: Authentication Flows' },
+  { type: 'pass', test: 'User Login — email + password', time: '324ms' },
+  { type: 'pass', test: 'User Login — OAuth (Google)', time: '512ms' },
+  { type: 'pass', test: 'Session persistence after refresh', time: '218ms' },
+  { type: 'suite', text: '  Suite: Payment & Transactions' },
+  { type: 'pass', test: 'Fund Transfer — domestic', time: '891ms' },
+  { type: 'pass', test: 'Fund Transfer — international', time: '1.2s' },
+  { type: 'pass', test: 'Card payment — 3DS challenge', time: '756ms' },
+  { type: 'suite', text: '  Suite: Onboarding' },
+  { type: 'pass', test: 'New user signup flow', time: '443ms' },
+  { type: 'pass', test: 'KYC document upload', time: '688ms' },
+  { type: 'pass', test: 'Email verification link', time: '315ms' },
+  { type: 'suite', text: '  Suite: Dashboard & Reports' },
+  { type: 'pass', test: 'Transaction history paginated', time: '201ms' },
+  { type: 'pass', test: 'Export CSV — last 30 days', time: '392ms' },
+  { type: 'summary', text: '✓  27 passed  ·  0 failed  ·  Finished in 9.4s' },
+];
+
+const termBody = document.getElementById('terminal-body');
+
+function buildLine(data) {
+  const div = document.createElement('div');
+  div.className = 'terminal-line';
+  if (data.type === 'pass') {
+    div.innerHTML = `<span class="t-check">✓</span><span class="t-test">${data.test}</span><span class="t-time">${data.time}</span>`;
+  } else if (data.type === 'fail') {
+    div.innerHTML = `<span class="t-fail">✗</span><span class="t-test">${data.test}</span><span class="t-time">${data.time}</span>`;
+  } else if (data.type === 'suite') {
+    div.innerHTML = `<span class="t-suite">${data.text}</span>`;
+  } else if (data.type === 'summary') {
+    div.innerHTML = `<span class="t-summary">${data.text}</span>`;
+  } else if (data.type === 'run') {
+    div.innerHTML = `<span class="t-run">${data.text}</span>`;
+  } else {
+    div.innerHTML = `<span class="t-info">${data.text}</span>`;
+  }
+  return div;
+}
+
+function runTerminal() {
+  termBody.innerHTML = '';
+  const elements = terminalLines.map(l => buildLine(l));
+  elements.forEach(el => termBody.appendChild(el));
+
+  let i = 0;
+  function showNext() {
+    if (i < elements.length) {
+      elements[i].classList.add('show');
+      i++;
+      setTimeout(showNext, i < 3 ? 300 : i < 5 ? 180 : 120);
+    }
+  }
+  showNext();
+}
+
+// Run on load
+runTerminal();
+// Loop every 8 seconds
+setInterval(runTerminal, 8000);
+
+// ── DASHBOARD ANIMATION ───────────────────────
+const dashTests = document.getElementById('dash-tests');
+const testResults = [
+  'pass','pass','pass','pass','pass','pass',
+  'pass','pass','pass','pass','pass','fail',
+  'pass','pass','pass','pass','pass','pass',
+  'pass','pass','fail','pass','pass','skip',
+];
+testResults.forEach((r, i) => {
+  const el = document.createElement('div');
+  el.className = `dash-test ${r}`;
+  el.textContent = r === 'pass' ? '✓' : r === 'fail' ? '✗' : '–';
+  el.style.opacity = '0';
+  el.style.transition = `opacity 0.3s ease ${i * 60}ms`;
+  dashTests.appendChild(el);
+  setTimeout(() => el.style.opacity = '1', 500 + i * 60);
+});
+// Count up the passed stat
+const passCountEl = document.getElementById('pass-count');
+let pc = 0;
+const passInterval = setInterval(() => {
+  pc++;
+  passCountEl.textContent = pc;
+  if (pc >= 21) clearInterval(passInterval);
+}, 60);
+
+// ── BEFORE/AFTER SLIDER ───────────────────────
+(function() {
+  const container = document.getElementById('slider-container');
+  if (!container) return;
+  const handle = document.getElementById('slider-handle');
+  const afterEl = container.querySelector('.slider-after');
+
+  let dragging = false;
+  let pos = 50;
+
+  function setPos(x) {
+    const rect = container.getBoundingClientRect();
+    pos = Math.min(100, Math.max(0, ((x - rect.left) / rect.width) * 100));
+    handle.style.left = pos + '%';
+    afterEl.style.clipPath = `inset(0 ${100 - pos}% 0 0)`;
+  }
+
+  // Mouse
+  container.addEventListener('mousedown', (e) => { dragging = true; setPos(e.clientX); });
+  window.addEventListener('mousemove', (e) => { if (dragging) setPos(e.clientX); });
+  window.addEventListener('mouseup', () => { dragging = false; });
+
+  // Touch
+  container.addEventListener('touchstart', (e) => { dragging = true; setPos(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener('touchmove', (e) => { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener('touchend', () => { dragging = false; });
+
+  // Initialise
+  handle.style.left = '50%';
+  afterEl.style.clipPath = 'inset(0 50% 0 0)';
+})();
+
+// ── CONTACT FORM ──────────────────────────────
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('form-success');
+  form.style.display = 'none';
+  success.style.display = 'block';
+});
+
+// ── SMOOTH SCROLL ─────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const offset = 76; // nav height
+      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
